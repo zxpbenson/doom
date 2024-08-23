@@ -121,13 +121,13 @@ function choseHost(){
                 ssh -i $BASE_DIR/keys/$passwd $username@$ipaddr -p $port
                 echo "ssh -i $BASE_DIR/$passwd $username@$ipaddr -p $port"
             else
-		if [ "X$passwd" == "X" ]; then
-	            expect -f $BASE_DIR/ssh_login_pwd_ipt.exp $ipaddr $username         $port
-		elif [ "X$passwd" == "Xpassword" ]; then
-	            expect -f $BASE_DIR/ssh_login.exp         $ipaddr $username password $port
-		else
-          	    expect -f $BASE_DIR/ssh_login.exp         $ipaddr $username $passwd $port
-		fi
+                if [ "X$passwd" == "X" ]; then
+                    expect -f $BASE_DIR/ssh_login_pwd_ipt.exp $ipaddr $username          $port
+                elif [ "X$passwd" == "Xpassword" ]; then
+                    expect -f $BASE_DIR/ssh_login.exp         $ipaddr $username password $port
+                else
+                    expect -f $BASE_DIR/ssh_login.exp         $ipaddr $username $passwd  $port
+                fi
             fi
         ;;
         "p"|"pre")
