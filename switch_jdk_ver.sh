@@ -2,12 +2,12 @@
 
 # 检查是否提供了参数
 if [ $# -ne 1 ]; then
-    echo "使用方法: $0 <jdk-version> (只有 8，23 可选)"
+    echo "使用方法: $0 <jdk-version> (只有 8，21，23，24 可选)"
     exit 1
 fi
 
 VER=$1
-TARGET_DIR=`cd ~/software/; pwd` 
+TARGET_DIR=`cd ~/software/; pwd`  # 这里换成你自己的目录
 
 echo "VER=$VER, TARGET_DIR=$TARGET_DIR"
 
@@ -25,13 +25,23 @@ case "$1" in
         echo "switch to jdk8"
         ln -s $TARGET_DIR/jdk1.8.0_261.jdk $TARGET_DIR/jdk
         ;;
+    21)
+        delOldJdkLink
+        echo "switch to jdk21"
+        ln -s $TARGET_DIR/jdk-21.0.6.jdk $TARGET_DIR/jdk
+        ;;
     23)
         delOldJdkLink
         echo "switch to jdk23"
         ln -s $TARGET_DIR/jdk-23.0.2.jdk $TARGET_DIR/jdk
         ;;
+    24)
+        delOldJdkLink
+        echo "switch to jdk23"
+        ln -s $TARGET_DIR/jdk-24.jdk $TARGET_DIR/jdk
+        ;;
     *)
-        echo "无效参数，请使用 8 | 23"
+        echo "无效参数，请使用 8 | 21 | 23 | 24"
         exit 1
         ;;
 esac
