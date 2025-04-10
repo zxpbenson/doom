@@ -9,6 +9,7 @@ fi
 VER=$1
 TARGET_DIR=`cd ~/software/; pwd`  # 这里换成你自己的目录
 
+echo "LTS Version List : 8，11，17，21，25(未发布)"
 echo "VER=$VER, TARGET_DIR=$TARGET_DIR"
 
 function delOldJdkLink() {
