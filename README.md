@@ -4,4 +4,4 @@
 
 在/etc/profile中加入如下内容，就可以用mlgn快速进入登录界面
 
-alias mlgn=/Users/sefarious/workspace/doom/login.sh
+alias mlgn=/Users/{yourName}/workspace/doom/login.sh
