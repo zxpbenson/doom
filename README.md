@@ -1,20 +1,25 @@
 # Doom - Developer Utility Scripts
 
-Doom is a collection of shell scripts designed to streamline your daily development workflow on macOS/Linux. It primarily features an SSH connection manager with a hierarchical menu system, along with utilities for switching Git accounts and JDK versions.
+Doom is a collection of shell scripts designed to streamline your daily development workflow on macOS/Linux. It primarily features an SSH connection manager with a hierarchical menu system, along with utilities for switching Git accounts, managing JDK versions, and fixing MP3 files.
 
 ## Features
 
 - **SSH Connection Manager (`login.sh`)**: Organize and connect to your remote servers using a terminal-based hierarchical menu. Supports password automation and key-based authentication.
 - **Git Account Switcher (`switch_git_acc.sh`)**: Quickly toggle between different global Git configurations (e.g., Personal vs. Work).
 - **JDK Version Manager (`switch_jdk_ver.sh`)**: Easily switch between different installed Java JDK versions.
+- **MP3 Fixer (`fix_mp3.sh`)**: Batch process and repair MP3 files by re-encoding them, useful for fixing corrupted headers or compatibility issues.
 
 ## Prerequisites
 
 - **OS**: macOS or Linux
 - **Shell**: Bash
-- **Dependencies**: `expect` is required for automated password handling in SSH connections.
-  - macOS: `brew install expect`
-  - Ubuntu/Debian: `sudo apt-get install expect`
+- **Dependencies**: 
+  - `expect`: Required for automated password handling in SSH connections.
+  - `ffmpeg`: Required for the MP3 fixer script.
+  
+  **Installation:**
+  - macOS: `brew install expect ffmpeg`
+  - Ubuntu/Debian: `sudo apt-get install expect ffmpeg`
 
 ## Installation
 
@@ -120,7 +125,26 @@ Updates a generic JDK symlink to point to a specific version.
 ./switch_jdk_ver.sh 25
 ```
 
+### 4. MP3 Fixer (`fix_mp3.sh`)
+
+Batch processes MP3 files by re-encoding them (MP3 -> M4A -> MP3) to fix corruption or metadata issues. It generates a report in the output directory.
+
+#### Running
+```bash
+# Basic usage
+./fix_mp3.sh -i ./broken_mp3 -o ./fixed_mp3
+
+# Dry run (simulate without changes)
+./fix_mp3.sh -i ./broken_mp3 -o ./fixed_mp3 --dry-run
+```
+
+**Options:**
+- `-i`: Input directory containing .mp3 files.
+- `-o`: Output directory (must be empty or not exist).
+- `--dry-run`: Print what would be done without making changes.
+- `--continue-on-error`: Continue processing even if a file fails (default).
+- `--no-continue-on-error`: Stop immediately if an error occurs.
+
 ## License
 
 [MIT](LICENSE)
-
