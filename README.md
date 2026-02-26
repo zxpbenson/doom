@@ -102,10 +102,10 @@ Create your specific git config files in your home directory (`~`):
 #### Running
 ```bash
 # Switch to personal config
-./switch_git_acc.sh github
+./switch_git_acc.sh -a github
 
 # Switch to corporate config
-./switch_git_acc.sh corp
+./switch_git_acc.sh -a corp
 ```
 
 ### 3. JDK Version Switcher (`switch_jdk_ver.sh`)
@@ -118,11 +118,11 @@ Updates a generic JDK symlink to point to a specific version.
 
 #### Running
 ```bash
-./switch_jdk_ver.sh 8
-./switch_jdk_ver.sh 11
-./switch_jdk_ver.sh 17
-./switch_jdk_ver.sh 21
-./switch_jdk_ver.sh 25
+./switch_jdk_ver.sh -v 8
+./switch_jdk_ver.sh -v 11
+./switch_jdk_ver.sh -v 17
+./switch_jdk_ver.sh -v 21
+./switch_jdk_ver.sh -v 25
 ```
 
 ### 4. MP3 Fixer (`fix_mp3.sh`)
