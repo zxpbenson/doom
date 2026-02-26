@@ -1,7 +1,126 @@
-主机存储在hosts目录下,可以以目录形式组织包含关系,但是最后一级要求是文件
+# Doom - Developer Utility Scripts
 
-密码可以写在最后一级文件中,如果不写就会在登录的时候提示输入
+Doom is a collection of shell scripts designed to streamline your daily development workflow on macOS/Linux. It primarily features an SSH connection manager with a hierarchical menu system, along with utilities for switching Git accounts and JDK versions.
 
-在/etc/profile中加入如下内容，就可以用mlgn快速进入登录界面
+## Features
 
-alias mlgn=/Users/{yourName}/workspace/doom/login.sh
+- **SSH Connection Manager (`login.sh`)**: Organize and connect to your remote servers using a terminal-based hierarchical menu. Supports password automation and key-based authentication.
+- **Git Account Switcher (`switch_git_acc.sh`)**: Quickly toggle between different global Git configurations (e.g., Personal vs. Work).
+- **JDK Version Manager (`switch_jdk_ver.sh`)**: Easily switch between different installed Java JDK versions.
+
+## Prerequisites
+
+- **OS**: macOS or Linux
+- **Shell**: Bash
+- **Dependencies**: `expect` is required for automated password handling in SSH connections.
+  - macOS: `brew install expect`
+  - Ubuntu/Debian: `sudo apt-get install expect`
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/zxpbenson/doom.git
+   cd doom
+   ```
+
+2. (Optional) Create an alias for quick access. Add the following to your shell profile (e.g., `~/.bash_profile`, `~/.zshrc`):
+   ```bash
+   alias mlgn='/path/to/doom/login.sh'
+   ```
+   *Note: Replace `/path/to/doom` with the actual absolute path to the cloned repository.*
+
+## Usage
+
+### 1. SSH Connection Manager (`login.sh`)
+
+This script provides a menu interface to navigate server lists and connect via SSH.
+
+#### Configuration
+
+1. **Hosts Directory**: The script expects a `hosts` directory in the project root (`doom/hosts`). You can create subdirectories within `hosts` to organize your servers hierarchically.
+   ```
+   doom/
+   ├── hosts/
+   │   ├── company-a/
+   │   │   └── web-servers
+   │   └── personal/
+   │       └── vps-list
+   ```
+
+2. **Host File Format**: The files within the directories (e.g., `web-servers`) contain the server connection details. Each line represents one server.
+
+   **Format:**
+   ```
+   Sequence:IP_Address:Port:Username:Password_or_Key:Description
+   ```
+
+   **Fields:**
+   - `Sequence`: A number used for menu selection (e.g., `1`, `2`).
+   - `IP_Address`: The IP address or hostname of the server.
+   - `Port`: SSH port (e.g., `22`).
+   - `Username`: SSH username.
+   - `Password_or_Key`:
+     - **Password**: Plain text password (login handled automatically via `expect`).
+     - **Key File**: Filename of the private key (must end in `.pem` and be placed in the `doom/keys/` directory).
+     - **Empty**: Leave empty to input password manually during login.
+   - `Description`: A brief description displayed in the menu.
+
+   **Example Content:**
+   ```text
+   1:192.168.1.10:22:root:mypassword:Main Web Server
+   2:10.0.0.5:2222:admin:auth.pem:Database Server
+   3:172.16.0.1:22:user::Testing (Manual Auth)
+   ```
+
+3. **Key Management**: If using PEM keys, place them in the `keys/` directory within the project root.
+
+#### Running
+```bash
+# Run directly
+./login.sh
+
+# Or via alias
+mlgn
+```
+Use the interactive menu to navigate directories and select a host.
+
+### 2. Git Account Switcher (`switch_git_acc.sh`)
+
+Switches the global `~/.gitconfig` by linking to a specific configuration file.
+
+#### Setup
+Create your specific git config files in your home directory (`~`):
+- `~/.gitconfig.github` (for personal/github use)
+- `~/.gitconfig.corp` (for corporate/work use)
+
+#### Running
+```bash
+# Switch to personal config
+./switch_git_acc.sh github
+
+# Switch to corporate config
+./switch_git_acc.sh corp
+```
+
+### 3. JDK Version Switcher (`switch_jdk_ver.sh`)
+
+Updates a generic JDK symlink to point to a specific version.
+
+#### Configuration
+1. Open `switch_jdk_ver.sh` and update `TARGET_DIR` to point to the directory where your JDKs are installed (default is `~/software/`).
+2. Ensure the JDK folder names in the script (e.g., `jdk1.8.0_261.jdk`) match your actual directory names.
+
+#### Running
+```bash
+./switch_jdk_ver.sh 8
+./switch_jdk_ver.sh 11
+./switch_jdk_ver.sh 17
+./switch_jdk_ver.sh 21
+./switch_jdk_ver.sh 25
+```
+
+## License
+
+[MIT](LICENSE)
+

@@ -2,14 +2,14 @@
 
 # 检查是否提供了参数
 if [ $# -ne 1 ]; then
-    echo "使用方法: $0 <jdk-version> (只有 8，11，17，21，23，24 可选)"
+    echo "使用方法: $0 <jdk-version> (只有 8，11，17，21，25)"
     exit 1
 fi
 
 VER=$1
 TARGET_DIR=`cd ~/software/; pwd`  # 这里换成你自己的目录
 
-echo "LTS Version List : 8，11，17，21，25(未发布)"
+echo "LTS Version List : 8，11，17，21，25"
 echo "VER=$VER, TARGET_DIR=$TARGET_DIR"
 
 function delOldJdkLink() {
@@ -41,18 +41,13 @@ case "$1" in
         echo "switch to jdk21"
         ln -s $TARGET_DIR/jdk-21.0.6.jdk $TARGET_DIR/jdk
         ;;
-    23)
+    25)
         delOldJdkLink
-        echo "switch to jdk23"
-        ln -s $TARGET_DIR/jdk-23.0.2.jdk $TARGET_DIR/jdk
-        ;;
-    24)
-        delOldJdkLink
-        echo "switch to jdk23"
-        ln -s $TARGET_DIR/jdk-24.jdk $TARGET_DIR/jdk
+        echo "switch to jdk25"
+        ln -s $TARGET_DIR/jdk-25.0.1.jdk $TARGET_DIR/jdk
         ;;
     *)
-        echo "无效参数，请使用 8 | 11 | 17 | 21 | 23 | 24"
+        echo "无效参数，请使用 8 | 11 | 17 | 21 | 25"
         exit 1
         ;;
 esac
